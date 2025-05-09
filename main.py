@@ -1,4 +1,3 @@
-
 import os
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler
@@ -74,15 +73,18 @@ def main():
         print("BOT_TOKEN environment variable not set.")
         return
 
+    # Initialize the application
     application = ApplicationBuilder().token(token).build()
+
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.VIDEO | filters.Document.VIDEO, handle_video))
     application.add_handler(CallbackQueryHandler(button))
-    import os
-from telegram.ext import ApplicationBuilder
 
-port = int(os.environ.get("PORT", 8080))
-application.run_polling(port=port)
+    # Get the port from the environment variable, defaulting to 8080
+    port = int(os.environ.get("PORT", 8080))
+
+    # Run the application with the specified port
+    application.run_polling(port=port)
 
 if __name__ == "__main__":
     main()

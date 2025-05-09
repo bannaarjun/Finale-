@@ -78,7 +78,11 @@ def main():
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.VIDEO | filters.Document.VIDEO, handle_video))
     application.add_handler(CallbackQueryHandler(button))
-    application.run_polling()
+    import os
+from telegram.ext import ApplicationBuilder
+
+port = int(os.environ.get("PORT", 8080))
+application.run_polling(port=port)
 
 if __name__ == "__main__":
     main()
